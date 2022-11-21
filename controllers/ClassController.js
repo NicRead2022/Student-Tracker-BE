@@ -12,7 +12,12 @@ const GetAllClasses = async (req, res) => {
 const GetOneClass = async (req, res) => {
   try {
     const aClass = await Class.findByPk(req.params.class_id, {
-      include: { model: Student, through: Grade, as: 'students' }
+      include: {
+        model: Student,
+        through: Grade,
+        as: 'students',
+        include: { model: Grade, where: { classId: req.params.class_id } }
+      }
     })
     res.send(aClass)
   } catch (error) {
