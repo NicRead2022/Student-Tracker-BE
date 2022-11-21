@@ -1,4 +1,4 @@
-const { Class } = require('../models')
+const { Class, Student, Grade } = require('../models')
 
 const GetAllClasses = async (req, res) => {
   try {
@@ -11,7 +11,9 @@ const GetAllClasses = async (req, res) => {
 
 const GetOneClass = async (req, res) => {
   try {
-    const aClass = await Class.findByPk(req.params.class_id)
+    const aClass = await Class.findByPk(req.params.class_id, {
+      include: { model: Student, through: Grade, as: 'students' }
+    })
     res.send(aClass)
   } catch (error) {
     throw error
