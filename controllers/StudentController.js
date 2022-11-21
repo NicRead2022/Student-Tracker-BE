@@ -9,6 +9,22 @@ const GetAllStudents = async (req, res) => {
   }
 }
 
+const GetAllStudentAndGrades = async (req, res) => {
+  try {
+    const students = await Student.findAll(
+      // {
+      //   include: { model: Class, through: Grade, as: 'classes' }
+      // },
+      {
+        include: { model: Grade }
+      }
+    )
+    res.send(students)
+  } catch (error) {
+    throw error
+  }
+}
+
 const GetOneStudent = async (req, res) => {
   try {
     const student = await Student.findByPk(req.params.student_id, {
@@ -55,6 +71,7 @@ const DeleteStudent = async (req, res) => {
 
 module.exports = {
   GetAllStudents,
+  GetAllStudentAndGrades,
   GetOneStudent,
   CreateStudent,
   UpdateStudent,
