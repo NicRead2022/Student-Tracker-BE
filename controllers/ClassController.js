@@ -20,6 +20,8 @@ const GetOneClass = async (req, res) => {
 
 const CreateClass = async (req, res) => {
   try {
+    const newClass = await Class.create({ ...req.body })
+    res.send(newClass)
   } catch (error) {
     throw error
   }
@@ -41,8 +43,8 @@ const DeleteClass = async (req, res) => {
 
 module.exports = {
   GetAllClasses,
-  GetOneClass
-  // CreateClass,
+  GetOneClass,
+  CreateClass
   // UpdateClass,
   // DeleteClass
 }
