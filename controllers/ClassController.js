@@ -29,6 +29,11 @@ const CreateClass = async (req, res) => {
 
 const UpdateClass = async (req, res) => {
   try {
+    const updateClass = await Class.update(
+      { ...req.body },
+      { where: { id: req.params.class_id }, returning: true }
+    )
+    res.send(updateClass)
   } catch (error) {
     throw error
   }
@@ -44,7 +49,7 @@ const DeleteClass = async (req, res) => {
 module.exports = {
   GetAllClasses,
   GetOneClass,
-  CreateClass
-  // UpdateClass,
+  CreateClass,
+  UpdateClass
   // DeleteClass
 }
