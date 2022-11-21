@@ -11,6 +11,8 @@ const GetAllClasses = async (req, res) => {
 
 const GetOneClass = async (req, res) => {
   try {
+    const aClass = await Class.findByPk(req.params.class_id)
+    res.send(aClass)
   } catch (error) {
     throw error
   }
@@ -39,8 +41,8 @@ const DeleteClass = async (req, res) => {
 
 module.exports = {
   GetAllClasses,
-  GetOneClass,
-  CreateClass,
-  UpdateClass,
-  DeleteClass
+  GetOneClass
+  // CreateClass,
+  // UpdateClass,
+  // DeleteClass
 }
