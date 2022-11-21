@@ -1,4 +1,5 @@
 const { Student, Class, Grade } = require('../models')
+const Sequelize = require('sequelize')
 
 const GetAllStudents = async (req, res) => {
   try {
@@ -11,14 +12,9 @@ const GetAllStudents = async (req, res) => {
 
 const GetAllStudentAndGrades = async (req, res) => {
   try {
-    const students = await Student.findAll(
-      // {
-      //   include: { model: Class, through: Grade, as: 'classes' }
-      // },
-      {
-        include: { model: Grade }
-      }
-    )
+    const students = await Student.findAll({
+      include: { model: Grade }
+    })
     res.send(students)
   } catch (error) {
     throw error
@@ -28,8 +24,14 @@ const GetAllStudentAndGrades = async (req, res) => {
 const GetOneStudent = async (req, res) => {
   try {
     const student = await Student.findByPk(req.params.student_id, {
-      include: { model: Class, through: Grade, as: 'classes' }
+      include: {
+        model: Class,
+        through: Grade,
+        as: 'classes',
+        include: { model: Grade, where: { studentId: req.params.student_id } }
+      }
     })
+    console.log(student)
     res.send(student)
   } catch (error) {
     throw error
