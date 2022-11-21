@@ -41,6 +41,11 @@ const UpdateClass = async (req, res) => {
 
 const DeleteClass = async (req, res) => {
   try {
+    await Class.destroy({ where: { id: req.params.class_id } })
+    res.send({
+      msg: 'Class Deleted',
+      status: 'Ok'
+    })
   } catch (error) {
     throw error
   }
@@ -50,6 +55,6 @@ module.exports = {
   GetAllClasses,
   GetOneClass,
   CreateClass,
-  UpdateClass
-  // DeleteClass
+  UpdateClass,
+  DeleteClass
 }
