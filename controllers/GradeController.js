@@ -1,4 +1,5 @@
 const { Class, Student, Grade } = require('../models')
+const Sequelize = require('sequelize')
 
 const EnrollStudent = async (req, res) => {
   try {
@@ -21,7 +22,7 @@ const UpdateStudentGrade = async (req, res) => {
     const updatedGrade = await Grade.update(
       { letter: letter },
       {
-        where: { classId: classId } && { studentId: studentId },
+        where: Sequelize.and({ classId: classId }, { studentId: studentId }),
         returning: true
       }
     )
